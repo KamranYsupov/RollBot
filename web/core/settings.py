@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django_extensions',
     
     # Приложения
+    'web.apps.rolls',
+    'web.apps.telegram_users',
 ]
 
 MIDDLEWARE = [
@@ -110,5 +112,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 BOT_USERNAME = os.getenv('BOT_USERNAME')
 BOT_LINK = f'https://t.me/{BOT_USERNAME}'
 MAX_MESSAGE_PER_SECOND = int(os.getenv('MAX_MESSAGE_PER_SECOND', 1))
+CHANNEL_ID = os.getenv('CHANNEL_ID')
+CHANNEL_LINK = os.getenv('CHANNEL_LINK')
 
 TELEGRAM_API_URL = 'https://api.telegram.org'
