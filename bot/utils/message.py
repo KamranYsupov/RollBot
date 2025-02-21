@@ -9,7 +9,7 @@ async def send_roll_info(chat_id: int, roll: Roll):
         f'{roll.text}\n\n'
         f'<a href="{roll.link}">Ссылка</a>'
     )
-    photo = FSInputFile(f'web/media/{roll.image.name}')
+    photo = FSInputFile(f'app/web/media/{roll.image.name}')
 
     await bot.send_photo(
         chat_id=chat_id,
