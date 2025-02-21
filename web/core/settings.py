@@ -14,7 +14,7 @@ DEBUG = os.getenv('DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
-
+BASE_URL = 'http://localhost'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
