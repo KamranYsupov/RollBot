@@ -21,3 +21,10 @@ async def random_roll_handler(aiogram_type: Union[types.CallbackQuery | types.Me
 
     roll = await get_random_roll()
     await send_roll_info(chat_id=aiogram_type.from_user.id, roll=roll)
+
+    if isinstance(aiogram_type, types.CallbackQuery):
+        callback = aiogram_type
+        await callback.message.edit_reply_markup(
+            inline_message_id=callback.inline_message_id,
+            reply_markup=None
+        )
