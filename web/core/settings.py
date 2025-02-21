@@ -28,8 +28,9 @@ INSTALLED_APPS = [
     'django_extensions',
     
     # Приложения
-    'web.apps.rolls',
     'web.apps.telegram_users',
+    'web.apps.rolls',
+
 ]
 
 MIDDLEWARE = [
@@ -66,8 +67,12 @@ WSGI_APPLICATION = 'web.core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
 
@@ -112,3 +117,5 @@ CHANNEL_ID = os.getenv('CHANNEL_ID')
 CHANNEL_LINK = os.getenv('CHANNEL_LINK')
 
 TELEGRAM_API_URL = 'https://api.telegram.org'
+
+DEFAULT_TELEGRAM_USERS_EXCEL_DATA_FILENAME = 'telegram_users.xlsx'
