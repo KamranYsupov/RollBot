@@ -9,7 +9,7 @@ from web.db.model_mixins import (
 class Roll(AsyncBaseModel):
     """Модель ролла"""
     image = models.ImageField(_('Картинка'), upload_to='images/')
-    text = models.TextField(_('Текст'))
+    text = models.TextField(_('Текст'), max_length=1024)
     link = models.URLField(_('Ссылка'))
 
     class Meta:

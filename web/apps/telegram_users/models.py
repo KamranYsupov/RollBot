@@ -21,6 +21,12 @@ class TelegramUser(AbstractTelegramUser):
         _('E-mail'),
         unique=True,
     )
+    date_birth = models.DateField(
+        _('Дата рождения'),
+        blank=True,
+        null=True,
+        default=None,
+    )
 
     class Meta:
         verbose_name = _('пользователь')

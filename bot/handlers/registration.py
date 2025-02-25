@@ -1,3 +1,4 @@
+from datetime import datetime
 import random
 
 import loguru
@@ -84,6 +85,32 @@ async def process_fio_message_handler(
         state: FSMContext
 ):
     await state.update_data(fio=message.text)
+
+    await message.answer(
+        'Отправьте дату рождения в формате: <b>День.Месяц.Год</b>.\n'
+        '<b>Пример: <em>01.11.2004</em></b>',
+        parse_mode='HTML'
+    )
+    await state.set_state(TelegramUserState.date_birth)
+
+
+@router.message(StateFilter(TelegramUserState.date_birth), F.text)
+async def process_date_birth_message_handler(
+        message: types.Message,
+        state: FSMContext
+):
+    loguru.logger.info('dsaddsad')
+    try:
+        date_birth = datetime.strptime(message.text, "%d.%m.%Y").date()
+    except ValueError:
+        await message.answer(
+            'Некорректная дата рождения\n\n'
+            'Пример: <b>01.11.2004</b>',
+            parse_mode='HTML'
+        )
+        return
+
+    await state.update_data(date_birth=date_birth)
 
     await message.answer('Укажите почту')
     await state.set_state(TelegramUserState.email)
