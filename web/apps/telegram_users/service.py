@@ -25,7 +25,6 @@ def export_telegram_users_to_excel(file_name=None) -> Optional[bytes]:
             'Имя пользователя': telegram_user.username,
             'ФИО': telegram_user.fio,
             'Номер телефона': telegram_user.phone_number,
-            'E-mail': telegram_user.email,
         }
         data.append(telegram_user_data)
 

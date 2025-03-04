@@ -7,4 +7,3 @@ class TelegramUserState(StatesGroup):
     phone_number = State()
     fio = State()
     date_birth = State()
-    email = State()

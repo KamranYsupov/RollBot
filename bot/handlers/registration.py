@@ -6,10 +6,7 @@ from aiogram import Router, types, F
 from aiogram.enums import ChatMemberStatus
 from aiogram.filters import CommandStart, Command, StateFilter, or_f
 from aiogram.fsm.context import FSMContext
-
 from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
 
 from bot.keyboards.reply import get_reply_contact_keyboard, reply_keyboard_remove, reply_cancel_keyboard
 from bot.orm.roll import get_random_roll
@@ -99,7 +96,6 @@ async def process_date_birth_message_handler(
         message: types.Message,
         state: FSMContext
 ):
-    loguru.logger.info('dsaddsad')
     try:
         date_birth = datetime.strptime(message.text, "%d.%m.%Y").date()
     except ValueError:
@@ -111,28 +107,9 @@ async def process_date_birth_message_handler(
         return
 
     await state.update_data(date_birth=date_birth)
-
-    await message.answer('Укажите почту')
-    await state.set_state(TelegramUserState.email)
-
-
-@router.message(StateFilter(TelegramUserState.email), F.text)
-async def process_email_message_handler(
-        message: types.Message,
-        state: FSMContext
-):
-    email = message.text
-    try:
-        validate_email(email)
-    except ValidationError:
-        await message.answer('Некорректный E-mail')
-        return
-
     await state.update_data(telegram_id=message.from_user.id)
-    await state.update_data(username=message.from_user.username)
-    await state.update_data(email=email)
+    state_data = await state.update_data(username=message.from_user.username)
 
-    state_data = await state.get_data()
     await TelegramUser.objects.acreate(**state_data)
     await state.clear()
 
@@ -145,11 +122,3 @@ async def process_email_message_handler(
         chat_id=message.from_user.id,
         roll=roll,
     )
-
-
-
-
-
-
-
-

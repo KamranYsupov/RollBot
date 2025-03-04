@@ -17,10 +17,6 @@ class TelegramUser(AbstractTelegramUser):
         max_length=50,
         unique=True,
     )
-    email = models.EmailField(
-        _('E-mail'),
-        unique=True,
-    )
     date_birth = models.DateField(
         _('Дата рождения'),
         blank=True,
