@@ -20,7 +20,7 @@ async def start_command_handler(
 
     if not telegram_user:
         message_text += \
-            f'Для старта работы бота <a href="{settings.CHANNEL_LINK}">подпишись на канал</a> 👇'
+            f'\n\nДля старта работы бота <a href="{settings.CHANNEL_LINK}">подпишись на канал</a> 👇'
         reply_markup = get_inline_keyboard(
             buttons={'Я подписан(а) ✅': 'check_subscription'}
         )
