@@ -6,6 +6,7 @@ from aiogram import Router, types, F
 from aiogram.enums import ChatMemberStatus
 from aiogram.filters import CommandStart, Command, StateFilter, or_f
 from aiogram.fsm.context import FSMContext
+from asgiref.sync import sync_to_async
 from django.conf import settings
 
 from bot.keyboards.reply import get_reply_contact_keyboard, reply_keyboard_remove, reply_cancel_keyboard
@@ -13,6 +14,7 @@ from bot.orm.roll import get_random_roll
 from bot.states.telegram_user import TelegramUserState
 from bot.models import TelegramUser, Roll
 from bot.utils.message import send_roll_info
+from web.apps.bot_settings.models import BotSettings
 
 router = Router()
 
@@ -113,8 +115,9 @@ async def process_date_birth_message_handler(
     await TelegramUser.objects.acreate(**state_data)
     await state.clear()
 
+    bot_settings: BotSettings = await sync_to_async(BotSettings.load)()
     await message.answer(
-        'Регистрация успешно завершена!',
+        bot_settings.text_after_registration,
         reply_markup=reply_keyboard_remove,
     )
     roll = await get_random_roll()
